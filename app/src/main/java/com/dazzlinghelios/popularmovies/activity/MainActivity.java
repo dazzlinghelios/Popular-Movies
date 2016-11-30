@@ -34,7 +34,7 @@ import retrofit2.Response;
  */
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final String API_KEY = "b504267ead72b42ada5d01974823ca78";
+    private static final String API_KEY = "";
 
     private int optionId = R.id.action_sort_by_popular;
     private boolean needFresh;
