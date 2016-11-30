@@ -1,7 +1,6 @@
 package com.dazzlinghelios.popularmovies.activity;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String API_KEY = "";
 
-    private int optionId = R.id.action_sort_by_popular;
+    private int menuId = R.id.action_sort_by_popular;
     private boolean needFresh;
     private boolean networkError;
     private SwipeRefreshLayout swipeContainer;
@@ -57,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             needFresh = savedInstanceState.getBoolean("needFresh");
             networkError = savedInstanceState.getBoolean("networkError");
+            menuId = savedInstanceState.getInt("menuId");
 //            recyclerViewState = savedInstanceState.getParcelable("recyclerStateKey");
 
 //            Log.d(TAG, "need fresh: " + needFresh);
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                sortByOptions(optionId);
+                sortByOptions(menuId);
                 swipeContainer.setRefreshing(false);
 
             }
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         // default to display movies by popularity
         if (needFresh)
-            sortByOptions(optionId);
+            sortByOptions(menuId);
 
 
 //        if (networkError) {
@@ -155,8 +155,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        optionId = item.getItemId();
-        switch (optionId) {
+        menuId = item.getItemId();
+        switch (menuId) {
             case R.id.action_sort_by_popular:
                 if (item.isChecked()) item.setChecked(false);
                 else item.setChecked(true);
@@ -196,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putBoolean("needFresh", needFresh);
         savedInstanceState.putBoolean("networkError", networkError);
+        savedInstanceState.putInt("menuId", menuId);
 
         // save recyclerview state
 //        recyclerViewState = layoutManager.onSaveInstanceState();
